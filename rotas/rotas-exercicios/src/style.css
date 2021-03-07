@@ -66,6 +66,7 @@ button {
 [primario] {
     color: #FFF;
     background-color: #2392f0;
+    margin-bottom: 10px;
 }
 
 [primario]:hover {
