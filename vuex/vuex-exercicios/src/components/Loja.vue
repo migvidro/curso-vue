@@ -11,43 +11,59 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 
 export default {
-    data() {
-        return {
-            sequencia: 1,
-            quantidade: 1,
-            preco: 9.99,
-        }
+  data() {
+    return {
+      sequencia: 1,
+    };
+  },
+  computed: {
+    quantidade() {
+      return this.$store.state.parametros.quantidade;
     },
-    methods: {
-        adicionar() {
-            const produto = {
-                id: this.sequencia,
-                nome: `Produto ${this.sequencia}`,
-                quantidade: this.quantidade,
-                preco: this.preco
-            }
-            this.sequencia++
-            // eslint-disable-next-line
-            console.log(produto)
-        }
-    }
-}
+    preco() {
+      return this.$store.state.parametros.preco;
+    },
+  },
+  methods: {
+    ...mapActions("carrinho", ["adicionarProduto"]),
+    adicionar() {
+      const produto = {
+        id: this.sequencia,
+        nome: `Produto ${this.sequencia}`,
+        quantidade: this.quantidade,
+        preco: this.preco,
+      };
+      this.sequencia++;
+
+      // this.$store.state.produtos.push(produto);
+      // this.$store.commit('adicionarProduto', produto);
+      // this.$store.dispatch('adicionarProduto', produto);
+      this.adicionarProduto(produto);
+
+      // eslint-disable-next-line
+      console.log(this.$store.getters.getNome);
+      // eslint-disable-next-line
+      console.log(this.$store.getters.getNomeCompleto);
+    },
+  },
+};
 </script>
 
 <style>
-    .loja {
-        display: flex;
-        justify-content: center;
-    }
+.loja {
+  display: flex;
+  justify-content: center;
+}
 
-    .loja > * {
-        margin: 0px 10px;
-    }
+.loja > * {
+  margin: 0px 10px;
+}
 
-    input {
-        font-size: 2rem;
-        width: 90px;
-    }
+input {
+  font-size: 2rem;
+  width: 90px;
+}
 </style>
